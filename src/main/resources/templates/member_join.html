@@ -30,7 +30,7 @@
 	<div>
 		<h4>회원 가입</h4>
 	</div>
-	<form action="memberJoin" method="post" th:object="${memberForm}">
+	<form th:action="@{/memberJoin}" method="post" th:object="${memberForm}">
 		<!-- 회원 가입시 에러 발생 메세지 출력 -->
 		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" role="alert">
 			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
