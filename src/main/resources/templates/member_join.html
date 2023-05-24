@@ -32,7 +32,7 @@
 	</div>
 	<form th:action="@{/memberJoin}" method="post" th:object="${memberForm}">
 		<!-- 회원 가입시 에러 발생 메세지 출력 -->
-		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" role="alert">
+		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
 			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
 		</div>
 		<!-- 에러 발생 출력 끝 -->
@@ -40,7 +40,7 @@
 			사용자 아이디 : <input type="text" th:field="*{userid}">
 		</div>
 		<div>
-			사용자 비밀번호 : <input type="password" th:field="*{userpw1]}">
+			사용자 비밀번호 : <input type="password" th:field="*{userpw1}">
 		</div>
 		<div>
 			사용자 비밀번호 확인 : <input type="password" th:field="*{userpw2}">

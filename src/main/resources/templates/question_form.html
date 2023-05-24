@@ -30,7 +30,7 @@
 		<h5 class="my-3 border-bottom pb-2">질문 등록하기</h5>
 		<form th:action="@{/questionCreate}" method="post" th:object="${questionForm}">
 		<!-- 질문 등록시 에러 발생 메세지 출력 -->
-		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" role="alert">
+		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
 			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
 		</div>
 		<!-- 에러 발생 출력 끝 -->

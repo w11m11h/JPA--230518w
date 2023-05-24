@@ -6,25 +6,7 @@
 <title>질문-답변 게시판</title>
 </head>
 <body>
-	<div class="container my-3">
-		<table class="table table-success table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성일시</th>
-				</tr>	
-			</thead>
-			<tbody>	
-				<tr th:each="question:${questionList}">
-					<td th:text="${question.id}"></td>
-					<td ><a th:href="@{|/questionContentView/${question.id}|}" th:text="${question.subject}"></a></td>
-					<td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')"></td>
-				</tr>	
-			</tbody>			
-		</table>
-		<a th:href="@{/questionCreate}" class="btn btn-primary my-3">질문 등록</a>
-		<!-- 네비게이션 바 시작 -->
+	<!-- 네비게이션 바 시작 -->
 		<nav class="navbar navbar-expand-lg bg-light">
 		  <div class="container-fluid">
 		    <a class="navbar-brand" href="/">JPA BOARD PROJECT</a>
@@ -44,6 +26,25 @@
 		  </div>
 		</nav>
 		<!-- 네비게이션 바 끝 -->
+	<div class="container my-3">
+		<table class="table table-success table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성일시</th>
+				</tr>	
+			</thead>
+			<tbody>	
+				<tr th:each="question:${questionList}">
+					<td th:text="${question.id}"></td>
+					<td ><a th:href="@{|/questionContentView/${question.id}|}" th:text="${question.subject}"></a></td>
+					<td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+				</tr>	
+			</tbody>			
+		</table>
+		<a th:href="@{/questionCreate}" class="btn btn-primary my-3">질문 등록</a>
+		
 	</div>
 </body>
 </html>
