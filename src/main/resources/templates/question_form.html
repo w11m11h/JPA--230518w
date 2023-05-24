@@ -2,13 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+<title>질문 등록</title>
 </head>
 <body>
-	<form th:action="@{/questionCreate}" method="post">
-		제목 : <input type="text" name="subject"><br>
-		내용 : <textarea rows="" cols="" name="content"></textarea><br>
-		<input type="submit" value="저장하기">	
-	</form>
+	<div class="container">
+		<h5 class="my-3 border-bottom pb-2">질문 등록하기</h5>
+		<form th:action="@{/questionCreate}" method="post">
+			<div class="mb-3">
+				<label class="form-label" for="subject">제목 :</label> 
+				<input type="text" name="subject" id="subject" class="form_control"><br>
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="subject">내용 :</label>
+				<textarea id="content" class="form-control" rows="10" name="content"></textarea><br>
+				<input type="submit" value="저장하기" class="btn btn-primary my-2">
+			</div>	
+		</form>
+	</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.moohee.board.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,17 @@ public class QuestionService {
 			return question;
 		} else {
 			throw new DataNotFoundException("선택하신 질문은 없는 글입니다.");
-		}
+		}		
 		
+	}
+public void questionCreate(String subject, String content) {
+		
+		Question question = new Question();
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setCreateDate(LocalDateTime.now());//서버의 현재시간 입력
+		
+		questionRepository.save(question);
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.moohee.board.entity.Question;
 import com.moohee.board.repository.QuestionRepository;
+import com.moohee.board.service.AnswerService;
 import com.moohee.board.service.QuestionService;
 
 @Controller
@@ -20,6 +21,9 @@ public class BoardController {
 	
 	@Autowired
 	private QuestionService questionService;
+	
+	@Autowired
+	private AnswerService answerService;
 	
 	@RequestMapping(value = "/")
 	public String home() {
@@ -39,18 +43,9 @@ public class BoardController {
 	@RequestMapping(value = "/questionCreate")
 	public String create(HttpServletRequest request) {
 		
-		request.getParameter("subject");
-		request.getParameter("content");
+		questionService.questionCreate(request.getParameter("subject"), request.getParameter("content"));
 		
-		Question question = new Question();
-		question.setSubject(request.getParameter("subject"));
-		question.setContent(request.getParameter("content"));
-		question.setCreateDate(LocalDateTime.now());//서버의 현재시간 입력
-		
-		
-		//questionRepository.save(question);//insert(질문글 저장)
-		
-		return "redirect:questionlist";
+		return "redirect:questionList";
 	}
 	
 	@RequestMapping(value = "/questionList")
@@ -78,6 +73,15 @@ public class BoardController {
 		return "question_view";
 	}
 	
-	
+	@RequestMapping(value = "/answerCreate/{id}") 
+	public String answerCreate(@PathVariable("id") Integer id, HttpServletRequest request) {
+		
+		Question question = questionService.getQuestion(id);
+		
+		answerService.answerCreate(request.getParameter("content"), question);
+		
+		return String.format("redirect:/questionContentView/%s", id);
+		
+	}
 	
 }

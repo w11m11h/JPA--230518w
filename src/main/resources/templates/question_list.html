@@ -2,19 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 <title>질문-답변 게시판</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<th>제목</th>
-			<th>작성일시</th>
-		</tr>		
-		<tr th:each="question:${questionList}">
-			<td ><a th:href="@{|/questionContentView/${question.id}|}" th:text="${question.subject}"></a></td>
-			<td th:text="${question.createDate}"></td>
-		</tr>
-			
-	</table>
+	<div class="container my-3">
+		<table class="table table-success table-striped">
+			<thead class="table-dark">
+				<tr>
+					<th>제목</th>
+					<th>작성일시</th>
+				</tr>	
+			</thead>
+			<tbody>	
+				<tr th:each="question:${questionList}">
+					<td th:text="${question.id}"></td>
+					<td ><a th:href="@{|/questionContentView/${question.id}|}" th:text="${question.subject}"></a></td>
+					<td th:text="${#temporals.format(question.createDate}, 'yyyy-MM-dd HH:mm)"></td>
+				</tr>	
+			</tbody>			
+		</table>
+		<a th:href="@{/question_form}" class="btn btn-primary my-3">질문 등록</a>
+		
+	</div>
 </body>
 </html>
