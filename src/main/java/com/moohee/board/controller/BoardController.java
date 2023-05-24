@@ -125,6 +125,7 @@ public class BoardController {
 		
 		if(!memberForm.getUserpw1().equals(memberForm.getUserpw2())) { //비밀번호 확인 실패
 			bindingResult.rejectValue("userpw2", "passwordCheckInCorrect", "비밀번호 확인란의 비밀번호가 일치하지 않습니다.");
+			return "member_join";
 		}
 		
 		memberService.memberJoin(memberForm.getUserid(), memberForm.getUserpw1(), memberForm.getEmail());
