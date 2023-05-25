@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.moohee.board.dto.AnswerForm;
 import com.moohee.board.dto.MemberForm;
@@ -160,6 +162,23 @@ public class BoardController {
 	@GetMapping(value = "/login")
 	public String login() {
 		return "login_form";
+	}
+	
+	@PreAuthorize("isAuthenticated()")//로그인이 안되어 있으면 login 페이지로 이동시킴
+	@GetMapping(value = "/questionModify/{id}")
+	public String questionModify(@PathVariable("id") Integer id, Principal principal, QuestionForm questionForm) {
+		
+		Question question = questionService.getQuestion(id); //질문 글 번호를 검색해서 해당 객체 가져오기
+		
+		if(question.getWriter().getUsername().equals(principal.getName())) {
+			//해당 질문의 글쓴이와 현재 로그인중인 유저의 아이디가 다르면
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 질문에 대한 수정 권한이 없습니다.");
+		}
+		
+		questionForm.setSubject(question.getSubject());
+		questionForm.setContent(question.getContent());
+		
+		return "question_form";
 	}
 	
 }
