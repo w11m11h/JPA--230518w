@@ -8,6 +8,6 @@ import com.moohee.board.entity.SiteMember;
 
 public interface SiteMemberRepository extends JpaRepository<SiteMember, Integer> {
 	
-	public Optional<SiteMember> findByUesrid(String userid);
+	public Optional<SiteMember> findByUsername(String username);
 
 }

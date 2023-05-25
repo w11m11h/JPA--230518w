@@ -38,7 +38,7 @@ public class MemberService {
 	
 	public SiteMember getMember(String username) {
 		
-		Optional<SiteMember> optSiteMember = siteMemberRepository.findByUesrid(username);
+		Optional<SiteMember> optSiteMember = siteMemberRepository.findByUsername(username);
 		
 		SiteMember siteMember = optSiteMember.get();
 		
