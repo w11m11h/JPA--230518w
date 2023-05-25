@@ -23,9 +23,9 @@ public class UserSecurityService implements UserDetailsService {
 	private SiteMemberRepository siteMemberRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Optional<SiteMember> optsiteMember = siteMemberRepository.findByUesrid(userid);
+		Optional<SiteMember> optsiteMember = siteMemberRepository.findByUesrid(username);
 		
 		if(optsiteMember.isEmpty()) { //참이면 아이디 조회 실패
 			throw new UsernameNotFoundException("아이디를 찾을 수 없습니다.");
@@ -36,13 +36,13 @@ public class UserSecurityService implements UserDetailsService {
 		//admin, user 권한설정 관련		
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
-		if(userid.equals("admin")) { //아이디가 admin이면 admin권환 부여, 아니면 모두 user권한 부여
+		if(username.equals("admin")) { //아이디가 admin이면 admin권환 부여, 아니면 모두 user권한 부여
 			authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
 		} else {
 			authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
 		}
 				
-		return new User(siteMember.getUserid(), siteMember.getUserpw(), authorities);
+		return new User(siteMember.getUsername(), siteMember.getUserpw(), authorities);
 	}
 
 }

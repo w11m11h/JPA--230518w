@@ -22,7 +22,8 @@ public class SecurityConfig {
 			//로그인과 로그아웃 관련 설정
 			.and() //로그인 설정
 				.formLogin()
-				.loginPage("/login") //로그인 페이지가 보이게 하는 요청
+				.loginPage("/login") //로그인 페이지가 보이게 하는 요청(기본 파라미터값 username, password)
+				.passwordParameter("userpw")
 				.defaultSuccessUrl("/index") //로그인 성공시 이동할 페이지의 요청
 			.and() //로그아웃 설정
 				.logout()

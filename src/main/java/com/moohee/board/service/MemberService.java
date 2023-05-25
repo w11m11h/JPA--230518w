@@ -13,12 +13,14 @@ public class MemberService {
 	
 	@Autowired
 	private SiteMemberRepository siteMemberRepository;
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	public SiteMember memberJoin(String userid, String userpw, String email) {
 		
 		SiteMember siteMember = new SiteMember();
-		siteMember.setUserid(userid);
+		siteMember.setUsername(userid);
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		siteMember.setUserpw(passwordEncoder.encode(userpw));
 		//유저가 입력한 암호를 hash함수로 암호화하여 암호문을 DB에 저장

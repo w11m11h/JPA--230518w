@@ -130,7 +130,7 @@ public class BoardController {
 		}
 		
 		try {
-			memberService.memberJoin(memberForm.getUserid(), memberForm.getUserpw1(), memberForm.getEmail());			
+			memberService.memberJoin(memberForm.getUsername(), memberForm.getUserpw1(), memberForm.getEmail());			
 		} catch (DataIntegrityViolationException e) { //DataIntegrityViolationException 중복키만 잡음
 			e.printStackTrace(); //콘솔창에 에러이유를 출력
 			bindingResult.reject("idRegFail", "이미 등록된 아이디 입니다.");
