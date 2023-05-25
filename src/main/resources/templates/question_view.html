@@ -50,6 +50,10 @@
 					sec:authorize="isAuthenticated()" th:if="${question.writer != null and #authentication.getPrincipal().getUsername() == question.writer.username}" th:text="수정"></a>
 					<a th:href="@{|/questionDelete/${question.id}|}" class="btn btn-outline-danger" 
 					sec:authorize="isAuthenticated()" th:if="${question.writer != null and #authentication.getPrincipal().getUsername() == question.writer.username}" th:text="삭제"></a>
+					<a th:href="@{|/questionLike/${question.id}|}" class="btn btn-success" 
+					sec:authorize="isAuthenticated()" th:if="${question.writer != null and #authentication.getPrincipal().getUsername() != question.writer.username}">
+					좋아요 <span class="badge text-bg-success" th:text="${#lists.size(question.liker)}"></span>
+					</a>					
 				</div>	
 			</div>
 		</div>
@@ -73,8 +77,8 @@
 				<div class="my-3">
 					<a th:href="@{|/answerModify/${answer.id}|}" class="btn btn-outline-primary" 
 					sec:authorize="isAuthenticated()" th:if="${answer.writer != null and #authentication.getPrincipal().getUsername() == answer.writer.username}" th:text="수정"></a>
-					<a th:href="@{|/questionDelete/${question.id}|}" class="btn btn-outline-danger" 
-					sec:authorize="isAuthenticated()" th:if="${question.writer != null and #authentication.getPrincipal().getUsername() == question.writer.username}" th:text="삭제"></a>
+					<a th:href="@{|/answerDelete/${answer.id}|}" class="btn btn-outline-danger" 
+					sec:authorize="isAuthenticated()" th:if="${answer.writer != null and #authentication.getPrincipal().getUsername() == answer.writer.username}" th:text="삭제"></a>
 				</div>							
 			</div>	
 		</div>
