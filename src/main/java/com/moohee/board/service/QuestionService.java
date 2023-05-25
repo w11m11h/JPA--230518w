@@ -56,5 +56,10 @@ public class QuestionService {
 		questionRepository.save(question);
 		
 	}
+	
+	public void questionDelete(Integer id) {
+		
+		questionRepository.deleteById(id);
+	}
 
 }
