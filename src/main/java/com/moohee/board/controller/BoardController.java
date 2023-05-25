@@ -31,6 +31,8 @@ import com.moohee.board.service.AnswerService;
 import com.moohee.board.service.MemberService;
 import com.moohee.board.service.QuestionService;
 
+import oracle.net.aso.q;
+
 @Controller
 public class BoardController {
 	
@@ -179,6 +181,28 @@ public class BoardController {
 		questionForm.setContent(question.getContent());
 		
 		return "question_form";
+	}
+	
+	@PreAuthorize("isAuthenticated()")//로그인이 안되어 있으면 login 페이지로 이동시킴
+	@PostMapping(value = "/questionModify/{id}")
+	public String questionModifyOk(@PathVariable("id") Integer id, Principal principal, @Valid QuestionForm questionForm, BindingResult bindingResult) {
+		
+//		System.out.println("수정할 질문글 번호:" + id);
+		
+		if(bindingResult.hasErrors()) {
+			return "question_form";
+		}
+		
+		Question question = questionService.getQuestion(id);
+		
+		if(!question.getWriter().getUsername().equals(principal.getName())) {
+			//해당 질문의 글쓴이와 현재 로그인중인 유저의 아이디가 다르면
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 질문에 대한 수정 권한이 없습니다.");
+		}
+		
+		questionService.questionModify(question, questionForm.getSubject(), questionForm.getContent());
+		
+		return String.format("redirect:/questionContentView/%s", id);
 	}
 	
 }
