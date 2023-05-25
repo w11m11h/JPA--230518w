@@ -145,7 +145,7 @@ public class BoardController {
 		return "redirect:index";
 	}
 	
-	@RequestMapping(value = "/login")
+	@GetMapping(value = "/login")
 	public String login() {
 		return "login_form";
 	}
