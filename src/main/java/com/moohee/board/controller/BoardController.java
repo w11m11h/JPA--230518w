@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -128,8 +129,25 @@ public class BoardController {
 			return "member_join";
 		}
 		
-		memberService.memberJoin(memberForm.getUserid(), memberForm.getUserpw1(), memberForm.getEmail());
+		try {
+			memberService.memberJoin(memberForm.getUserid(), memberForm.getUserpw1(), memberForm.getEmail());			
+		} catch (DataIntegrityViolationException e) { //DataIntegrityViolationException 중복키만 잡음
+			e.printStackTrace(); //콘솔창에 에러이유를 출력
+			bindingResult.reject("idRegFail", "이미 등록된 아이디 입니다.");
+			return "member_join";
+		} catch (Exception e) {
+			e.printStackTrace(); //콘솔창에 에러이유를 출력
+//			bindingResult.reject("idRegFail", "아이디 등록 중 에러가 발생했습니다.");
+			bindingResult.reject("idRegFail", e.getMessage()); //해당 오류 메시지를 에러로 전송
+			return "member_join";
+		}
 		
 		return "redirect:index";
 	}
+	
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "login_form";
+	}
+	
 }

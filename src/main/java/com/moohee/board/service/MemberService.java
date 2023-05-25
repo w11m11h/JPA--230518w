@@ -24,7 +24,7 @@ public class MemberService {
 //		siteMember.setUserpw(userpw);
 		siteMember.setEmail(email);
 		
-		siteMemberRepository.save(siteMember);
+		siteMemberRepository.save(siteMember);		
 		
 		return siteMember;
 		

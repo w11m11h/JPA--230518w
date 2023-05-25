@@ -7,7 +7,7 @@
 </head>
 <body>
 	<!-- 네비게이션 바 시작 -->
-	<nav class="navbar navbar-expand-lg bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 	  <div class="container-fluid">
 	    <a class="navbar-brand" href="/">JPA BOARD PROJECT</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,10 @@
 	          <a class="nav-link" href="questionCreate">질문하기</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="#">로그인</a>
+	          <a class="nav-link" href="login">로그인</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" href="memberJoin">회원가입</a>
 	        </li>
 	      </ul>
 	    </div>
@@ -28,14 +31,17 @@
 	<!-- 네비게이션 바 끝 -->
 	
 	<div>
-		<h4>회원 가입</h4>
-	</div>
-	<form th:action="@{/memberJoin}" method="post" th:object="${memberForm}">
-		<!-- 회원 가입시 에러 발생 메세지 출력 -->
+		<div>
+			<h4>회원 가입</h4>
+		</div>
+		<form th:action="@{/memberJoin}" method="post" th:object="${memberForm}">
+		
+		<!-- 회원 등록시 에러 발생 메세지 출력 -->
 		<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
 			<div th:each="err:${#fields.allErrors()}" th:text="${err}"></div>
 		</div>
 		<!-- 에러 발생 출력 끝 -->
+		
 		<div>
 			사용자 아이디 : <input type="text" th:field="*{userid}">
 		</div>
@@ -44,11 +50,12 @@
 		</div>
 		<div>
 			사용자 비밀번호 확인 : <input type="password" th:field="*{userpw2}">
-		</div>	
+		</div>
 		<div>
 			사용자 이메일 : <input type="text" th:field="*{email}">
-		</div>	
+		</div>
 		<input type="submit" value="회원가입">
 	</form>
+	</div>
 </body>
 </html>
