@@ -1,5 +1,6 @@
 package com.moohee.board.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import com.moohee.board.dto.AnswerForm;
 import com.moohee.board.dto.MemberForm;
 import com.moohee.board.dto.QuestionForm;
 import com.moohee.board.entity.Question;
+import com.moohee.board.entity.SiteMember;
 import com.moohee.board.repository.QuestionRepository;
 import com.moohee.board.service.AnswerService;
 import com.moohee.board.service.MemberService;
@@ -52,14 +55,18 @@ public class BoardController {
 		return "question_form";
 	}
 	
+	
 	@PostMapping(value = "/questionCreate")
-	public String create(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String create(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		
 		if(bindingResult.hasErrors()) { //에러가 발생하면 참
 			return "question_form";
 		}
 		
-		questionService.questionCreate(questionForm.getSubject(), questionForm.getContent());			
+		//principal.getName() -> 현재 로그인 중인 유저의 username을 가져오기
+		SiteMember siteMember = memberService.getMember(Integer.parseInt(principal.getName()));
+		
+		questionService.questionCreate(questionForm.getSubject(), questionForm.getContent(), siteMember);			
 		
 		return "redirect:questionList";
 	}

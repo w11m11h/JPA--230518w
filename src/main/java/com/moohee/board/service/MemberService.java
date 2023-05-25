@@ -1,5 +1,7 @@
 package com.moohee.board.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +19,11 @@ public class MemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public SiteMember memberJoin(String userid, String userpw, String email) {
+	public SiteMember memberJoin(String username, String userpw, String email) {
 		
 		SiteMember siteMember = new SiteMember();
-		siteMember.setUsername(userid);
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		siteMember.setUsername(username);
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		siteMember.setUserpw(passwordEncoder.encode(userpw));
 		//유저가 입력한 암호를 hash함수로 암호화하여 암호문을 DB에 저장
 		
@@ -33,5 +35,16 @@ public class MemberService {
 		return siteMember;
 		
 	}
+	
+	public SiteMember getMember(String username) {
+		
+		Optional<SiteMember> optSiteMember = siteMemberRepository.findByUesrid(username);
+		
+		SiteMember siteMember = optSiteMember.get();
+		
+		return siteMember;
+		
+	}
+	
 
 }
