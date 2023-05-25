@@ -53,13 +53,13 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/questionCreate")
-	public String create(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String create(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) { //에러가 발생하면 참
 			return "question_form";
-		} else {
-			questionService.questionCreate(questionForm.getSubject(), questionForm.getContent());			
 		}
+		
+		questionService.questionCreate(questionForm.getSubject(), questionForm.getContent());			
 		
 		return "redirect:questionList";
 	}

@@ -2,6 +2,7 @@ package com.moohee.board.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.moohee.board.entity.SiteMember;
@@ -12,6 +13,7 @@ public class MemberService {
 	
 	@Autowired
 	private SiteMemberRepository siteMemberRepository;
+	private PasswordEncoder passwordEncoder;
 	
 	public SiteMember memberJoin(String userid, String userpw, String email) {
 		
